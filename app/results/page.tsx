@@ -11,7 +11,6 @@ import type { SearchResult } from "@/types/search-result"
 export default function ResultsPage() {
   const searchParams = useSearchParams()
   const imageUrl = searchParams.get("url")
-  const token = searchParams.get("token")
 
   const [results, setResults] = useState<SearchResult[]>([])
   const [loading, setLoading] = useState(true)
@@ -21,22 +20,20 @@ export default function ResultsPage() {
 
   useEffect(() => {
     const fetchResults = async () => {
-      if (!imageUrl || !token) {
+      if (!imageUrl) {
         setError("Missing image URL or token.")
         setLoading(false)
         return
       }
 
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/search", {
+        const response = await fetch("https://backend-service2-emct.onrender.com/api/search", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            image_url: imageUrl,
-            user_id: 123, // Replace with real user ID if needed
-            token: token,
+            image_url: imageUrl
           }),
         })
 
@@ -54,7 +51,7 @@ export default function ResultsPage() {
     }
 
     fetchResults()
-  }, [imageUrl, token])
+  }, [imageUrl])
 
   const handleShowMore = () => {
     setDisplayCount((prev) => prev + 12)

@@ -43,10 +43,6 @@ export default function PremiumLensoClone() {
 
       <Header />
       <HeroSection />
-      <FeaturesSection />
-      <PricingSection />
-      <ContentSection />
-      <Footer />
     </div>
   )
 }
